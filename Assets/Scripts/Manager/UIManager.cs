@@ -16,7 +16,11 @@ public class UIManager : BaseInstanceMono<UIManager>
     //物体介绍
     public GameObject WuTiJieShao;
 
+    //跟随按钮
+    public Button followBtn;
+
     public Transform MuCaiJieShao;
+
 
     private Color color;
     public override void Awake()
@@ -25,6 +29,7 @@ public class UIManager : BaseInstanceMono<UIManager>
         WuTiJieShao = transform.Find("物体介绍").gameObject;
         MuCaiJieShao = transform.Find("木材介绍");
         uiControl = transform.GetComponent<UIControl>();
+        followBtn = transform.Find("自动跟随").GetComponent<Button>();
         color = new Color(255, 255, 255, 0.5f);
     }
     private void Start()
@@ -48,11 +53,21 @@ public class UIManager : BaseInstanceMono<UIManager>
         {
             WuTiJieShao.transform.XPUIClose();
         });
+        followBtn.onClick.AddListener(() =>
+        {
+            GameManager.Instance.player.FlipTo(GameManager.Instance.points[(int)GameManager.Instance.PlayerSetpType].position);
+           // followBtn.transform.XPUIClose();
+        });
     }
 
     public void Show(Transform transform)
     {
         uiControl.ShowPanel(transform);
+    }
+
+    public void FollowBtnShow()
+    {
+        uiControl.ShowPanel(followBtn.transform);
     }
 
     public void ButtoniSAct(StepType setpType)

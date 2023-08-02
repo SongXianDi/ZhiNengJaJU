@@ -32,7 +32,7 @@ public class GameManager : BaseInstanceMono<GameManager>
 
     public HighlightPlus.HighlightProfile highlightTool;
 
-
+    public PlayerControl player;
 
     //当前阶段
     private StepType currentSetpType = StepType.NIL;
@@ -62,11 +62,21 @@ public class GameManager : BaseInstanceMono<GameManager>
     private void Start()
     {
         ZhuChiRen = GameObject.FindGameObjectWithTag("Enemy").GetComponent<ZhuChiRen>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         //mater.GetComponent<MeshRenderer>().material.SetFloat("_Speed",0.5f);
     }
     public void ZhuChiRenMove(int i)
     {
         ZhuChiRen.FlipTo(points[i].position);
+    }
+
+    /// <summary>
+    /// 主持人到达地点后处理的事情（激活玩家跟随按钮）
+    /// </summary>
+    public void ZCRArrviePonit()
+    {
+        print("到达");
+        UIManager.Instance.FollowBtnShow();
     }
     /// <summary>
     /// 玩家到达地点后处理的事情（动画，可点击...）

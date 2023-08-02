@@ -50,16 +50,16 @@ public class ZhuChiRen : EnemyControl
     public void FlipTo2(Vector3 target)
     {
         nav.isStopped = false;
-        animator.SetBool("iswalk", true);
-        animator.SetBool("Proteak", false);
+       // animator.SetBool("iswalk", true);
+        //animator.SetBool("Proteak", false);
         nav.SetDestination(target);
     }
 
     public IEnumerator FlipTo3(Vector3 target)
     {
-        animator.SetBool("iswalk", true);
-
+        
         yield return new WaitForSeconds(1f);
+        animator.SetBool("iswalk", true);
         animator.SetBool("Proteak", false);
         FlipTo2(target);
         StartCoroutine(WaitForDestination());
@@ -69,7 +69,7 @@ public class ZhuChiRen : EnemyControl
     {
         tiShi.gameObject.SetActive(isShow);
         highlight.highlighted = isShow;
-        //GetComponent<CapsuleCollider>().enabled = isShow;
+        GetComponent<CapsuleCollider>().enabled = isShow;
     }
 
     private IEnumerator WaitForDestination()
@@ -109,12 +109,15 @@ public class ZhuChiRen : EnemyControl
         //GuanZ1.GetComponent<Animator>().SetBool("New Bool", false);
         //GuanZ2.GetComponent<Animator>().SetBool("New Bool", false);
         OperationHintManager.Instance.ChangeText("请跟随主持人");
+
         //面朝玩家
         //Mathf
         //transform.LookAt(player);
         LuBiao.transform.position = transform.position;
         LuBiao.SetActive(true);
         //StopCoroutine(WaitForDestination());
+        GameManager.Instance.ZCRArrviePonit();
+        Debug.Log("到达");
         StartCoroutine(Rotate());
     }
     private void OnMouseUp()
