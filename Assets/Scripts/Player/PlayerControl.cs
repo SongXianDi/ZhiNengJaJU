@@ -122,7 +122,7 @@ public class PlayerControl : MonoBehaviour
         nav.isStopped = false;
         //StopAllCoroutines();
         //AI目标点
-        nav.destination = target;
+       // nav.destination = target;
         nav.SetDestination(target);
         print(nav.destination);
         //StopAllCoroutines();
@@ -140,6 +140,7 @@ public class PlayerControl : MonoBehaviour
 
             yield return null;
         }
+
         nav.isStopped = true;
     }
 
@@ -151,6 +152,7 @@ public class PlayerControl : MonoBehaviour
             if (other.GetComponent<Point>().stepType == GameManager.Instance.PlayerSetpType)
             {
                 nav.isStopped = true;
+                StopAllCoroutines();//停止移动
                 GameManager.Instance.StepGeneralMethod(other.GetComponent<Point>().stepType);
 
             }

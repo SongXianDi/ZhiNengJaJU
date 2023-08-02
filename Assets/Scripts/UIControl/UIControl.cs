@@ -66,13 +66,13 @@ public class UIControl : MonoBehaviour
         KanBanPanel.XPUIClose();
         StartBtn.GetComponent<StepImageManager>().arrviedThis();
     }
+    //按钮点击触发主持人移动
     public void SetpBtn(int button)
     {
+        Debug.Log(111);
         if ((StepType)button != GameManager.Instance.CurrentSetpType)
         {
-            GameManager.Instance.ZhuChiRen.TiShiShow(false);
-            GameManager.Instance.PlayerSetpType = (StepType)button;
-            GameManager.Instance.ZhuChiRenMove(button);
+            GameManager.Instance.ZhuChiRenMove((StepType)button);
         }
         else
         {

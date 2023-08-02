@@ -13,7 +13,6 @@ public class QuYu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(gameObject.name);
         o.gameObject.SetActive(true);
     }
 

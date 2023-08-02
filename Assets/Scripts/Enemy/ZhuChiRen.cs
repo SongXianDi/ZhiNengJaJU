@@ -41,9 +41,9 @@ public class ZhuChiRen : EnemyControl
         animator.SetBool("Proteak", false);
         nav.destination = target;
         nav.SetDestination(target);
-        GuanZ1.FlipTo(target + Vector3.left*2);
-        GuanZ2.FlipTo(target + Vector3.right*2);
-        StartCoroutine(WaitForDestination());
+        GuanZ1?.FlipTo(target + Vector3.left*1.5f);
+        GuanZ2?.FlipTo(target + Vector3.right*1.5f);
+        StartCoroutine(WaitForDestination(true));
         //StopAllCoroutines();
     }
 
@@ -62,7 +62,7 @@ public class ZhuChiRen : EnemyControl
         animator.SetBool("iswalk", true);
         animator.SetBool("Proteak", false);
         FlipTo2(target);
-        StartCoroutine(WaitForDestination());
+        StartCoroutine(WaitForDestination(false));
     }
 
     public void TiShiShow(bool isShow)
@@ -72,7 +72,7 @@ public class ZhuChiRen : EnemyControl
         GetComponent<CapsuleCollider>().enabled = isShow;
     }
 
-    private IEnumerator WaitForDestination()
+    private IEnumerator WaitForDestination(bool isTranslate)
     {
         while (nav.pathPending)
         {
@@ -86,7 +86,7 @@ public class ZhuChiRen : EnemyControl
         }
 
         // 到达目的地后触发的回调函数
-        OnReachedDestination();
+        OnReachedDestination(isTranslate);
     }
 
     private IEnumerator Rotate()
@@ -95,29 +95,31 @@ public class ZhuChiRen : EnemyControl
         while (timer * 0.5f < 1)
         {
             timer += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(player.position - transform.position - Vector3.up * 0.8f), timer * 0.5f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(player.position - transform.position - Vector3.up * 0.6f), timer * 0.5f);
             yield return null;
         }
     }
-    private void OnReachedDestination()
+    private void OnReachedDestination(bool isTranlate)
     {
         Debug.Log("Reached destination!");
         nav.isStopped = true;
         //animator.SetBool("New Bool", false);
         animator.SetBool("Proteak", true);
         animator.SetBool("iswalk", false);
-        //GuanZ1.GetComponent<Animator>().SetBool("New Bool", false);
-        //GuanZ2.GetComponent<Animator>().SetBool("New Bool", false);
-        OperationHintManager.Instance.ChangeText("请跟随主持人");
+        if(isTranlate)
+        {
+            OperationHintManager.Instance.ChangeText("请跟随引导人");
+            LuBiao.transform.position = transform.position;
+            LuBiao.SetActive(true);
+            GameManager.Instance.ZCRArrviePonit();
+        }
+
 
         //面朝玩家
         //Mathf
         //transform.LookAt(player);
-        LuBiao.transform.position = transform.position;
-        LuBiao.SetActive(true);
+
         //StopCoroutine(WaitForDestination());
-        GameManager.Instance.ZCRArrviePonit();
-        Debug.Log("到达");
         StartCoroutine(Rotate());
     }
     private void OnMouseUp()
@@ -163,18 +165,20 @@ public class ZhuChiRen : EnemyControl
         {
             //isOne = false;
             animator.SetBool("istalk", true);
-            await Task.Delay(2000); ;
+            await Task.Delay(2000);
             OperationHintManager.Instance.ChangeText("浏览结束，你也可以点击流程观看以前步骤");
             AudioManage.Instance.PlayMusicSource("结束语");
         }
 
     }
 
-    public void Arrive()
+    public async void Arrive()
     {
         animator.SetBool("istalk", false);
         GameManager.Instance.gameControl.ZhuChiRenArrive();
         OperationHintManager.Instance.ChangeText("请点击流程按钮");
+        await Task.Delay(1000);
+        GameManager.Instance.ZhuChiRenMove(GameManager.Instance.CurrentSetpType + 1);
     }
 
 }

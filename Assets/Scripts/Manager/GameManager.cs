@@ -65,9 +65,16 @@ public class GameManager : BaseInstanceMono<GameManager>
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
         //mater.GetComponent<MeshRenderer>().material.SetFloat("_Speed",0.5f);
     }
-    public void ZhuChiRenMove(int i)
+    /// <summary>
+    /// 主持人说完后进入下一步
+    /// </summary>
+    /// <param name="i"></param>
+    public void ZhuChiRenMove(StepType i)
     {
-        ZhuChiRen.FlipTo(points[i].position);
+        UIManager.Instance.ButtoniSColorChange((int)i);
+        ZhuChiRen.TiShiShow(false);
+        PlayerSetpType =i;
+        ZhuChiRen.FlipTo(points[(int)i].position);
     }
 
     /// <summary>
@@ -77,15 +84,6 @@ public class GameManager : BaseInstanceMono<GameManager>
     {
         print("到达");
         UIManager.Instance.FollowBtnShow();
-    }
-    /// <summary>
-    /// 玩家到达地点后处理的事情（动画，可点击...）
-    /// </summary>
-    public void PlayerArrviePonit(StepType setpType)
-    {
-        ZhuChiRen.TiShiShow(true);
-
-        // StepGeneralMethod(setpType);
     }
 
 
@@ -117,5 +115,6 @@ public class GameManager : BaseInstanceMono<GameManager>
         //AudioManage.Instance.PlayMusicSource(audioName, 0.5f);
         //obje.GetComponent<HighlightPlus.HighlightEffect>().highlighted = true;
     }
+
 
 }
