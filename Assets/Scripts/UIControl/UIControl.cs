@@ -51,6 +51,7 @@ public class UIControl : MonoBehaviour
         {
             scrollRect.horizontalNormalizedPosition += 0.2f;
         });
+        KanBanPanel.gameObject.SetActive(true);
     }
     private void Init()
     {
@@ -69,7 +70,6 @@ public class UIControl : MonoBehaviour
     //按钮点击触发主持人移动
     public void SetpBtn(int button)
     {
-        Debug.Log(111);
         if ((StepType)button != GameManager.Instance.CurrentSetpType)
         {
             GameManager.Instance.ZhuChiRenMove((StepType)button);

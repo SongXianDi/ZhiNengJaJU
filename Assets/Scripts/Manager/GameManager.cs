@@ -63,10 +63,9 @@ public class GameManager : BaseInstanceMono<GameManager>
     {
         ZhuChiRen = GameObject.FindGameObjectWithTag("Enemy").GetComponent<ZhuChiRen>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        //mater.GetComponent<MeshRenderer>().material.SetFloat("_Speed",0.5f);
     }
     /// <summary>
-    /// 主持人说完后进入下一步
+    /// 主持人说完后进入下一步（或者按钮点击的下一步）
     /// </summary>
     /// <param name="i"></param>
     public void ZhuChiRenMove(StepType i)

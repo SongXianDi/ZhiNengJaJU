@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
     protected NavMeshAgent nav;
 
     Vector3 moveTo;
+    WaitForSeconds wait;
     private void Awake()
     {
         m_tranform = this.transform;
@@ -34,6 +35,7 @@ public class PlayerControl : MonoBehaviour
     }
     void Start()
     {
+        wait = new WaitForSeconds(0.5f);
         //m_chaController = GetComponent<CharacterController>();
         //获取主摄像机的transform组件
         //m_camTransform = Camera.main.transform;
@@ -117,27 +119,32 @@ public class PlayerControl : MonoBehaviour
     /// 目标地点
     /// </summary>
     /// <param name="transform"></param>
-    public void FlipTo(Vector3 target)
+    public void FlipTo(Transform target)
     {
         nav.isStopped = false;
-        //StopAllCoroutines();
+        StopAllCoroutines();
         //AI目标点
-       // nav.destination = target;
-        nav.SetDestination(target);
+        nav.destination = target.position;
+
         print(nav.destination);
         //StopAllCoroutines();
-        StartCoroutine(WaitForDestination());
+        StartCoroutine(WaitForDestination(target));
+        StartCoroutine(TriggerDetection());
     }
-    private IEnumerator WaitForDestination()
+    private IEnumerator WaitForDestination(Transform target)
     {
         while (nav.pathPending)
         {
             yield return null;
         }
 
-        while (nav.remainingDistance - 0.5f > nav.stoppingDistance)
+        while (nav.remainingDistance > nav.stoppingDistance)
         {
-
+            nav.SetDestination(target.position);
+            while (nav.pathPending)
+            {
+                yield return null;
+            }
             yield return null;
         }
 
@@ -146,7 +153,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.tag == "Point")
         {
             if (other.GetComponent<Point>().stepType == GameManager.Instance.PlayerSetpType)
@@ -156,6 +163,26 @@ public class PlayerControl : MonoBehaviour
                 GameManager.Instance.StepGeneralMethod(other.GetComponent<Point>().stepType);
 
             }
+        }
+    }
+    IEnumerator TriggerDetection()
+    {
+        while (true)
+        {
+            foreach (var other in Physics.OverlapSphere(transform.position, 0.5f)) 
+            {
+                if(other.tag=="Point")
+                {
+                    if (other.GetComponent<Point>().stepType == GameManager.Instance.PlayerSetpType)
+                    {
+                        nav.isStopped = true;
+                        StopAllCoroutines();//停止移动
+                        GameManager.Instance.StepGeneralMethod(other.GetComponent<Point>().stepType);
+                        yield break;
+                    }
+                }
+            }
+            yield return wait;
         }
     }
 }

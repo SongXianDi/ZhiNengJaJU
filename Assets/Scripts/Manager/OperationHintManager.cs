@@ -44,7 +44,7 @@ public class OperationHintManager : BaseInstanceMono<OperationHintManager>
         contentText.text = str;
         Open();
 
-        Invoke("Close", 3f);
+        Invoke("Close", 6f);
     }
 
 

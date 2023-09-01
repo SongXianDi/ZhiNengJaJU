@@ -31,7 +31,7 @@ public class StepManager : MonoBehaviour
         if (GameManager.Instance.CurrentSetpType != step)
         {
             GameManager.Instance.ZhuChiRen.TiShiShow(true);
-            OperationHintManager.Instance.ChangeText("回到" + step.ToString()+"点击主持人或点击物体");
+            OperationHintManager.Instance.ChangeText("回到" + step.ToString()+"点击引导人或点击物体");
         }
         stepImages[(int)step].arrviedThis();
     }

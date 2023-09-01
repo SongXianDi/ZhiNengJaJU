@@ -39,18 +39,19 @@ public class UIManager : BaseInstanceMono<UIManager>
     private void Start()
     {
 
-        for(int i=0;i<stepButtons.Length;i++)
+        for (int i = 0; i < stepButtons.Length; i++)
         {
-            if(i!=0)
+            if (i != 0)
             {
                 stepButtons[i].interactable = false;
                 stepButtons[i].transform.GetChild(0).GetComponent<Image>().color = color;
             }
-            
+
             int buttonIndext = i;
-            stepButtons[i].onClick.AddListener(() => {
-                Debug.Log("click");
-                uiControl.SetpBtn(buttonIndext); 
+            stepButtons[i].onClick.AddListener(() =>
+            {
+                Debug.Log("按钮点击");
+                uiControl.SetpBtn(buttonIndext);
             });
         }
         WuTiJieShao.transform.Find("关闭").GetComponent<Button>().onClick.AddListener(() =>
@@ -59,7 +60,7 @@ public class UIManager : BaseInstanceMono<UIManager>
         });
         followBtn.onClick.AddListener(() =>
         {
-            GameManager.Instance.player.FlipTo(/*GameManager.Instance.points[(int)GameManager.Instance.PlayerSetpType].position*/GameManager.Instance.ZhuChiRen.transform.position);
+            GameManager.Instance.player.FlipTo(/*GameManager.Instance.points[(int)GameManager.Instance.PlayerSetpType].position*/GameManager.Instance.ZhuChiRen.transform);
             followBtn.transform.XPUIClose();
         });
     }
@@ -77,15 +78,19 @@ public class UIManager : BaseInstanceMono<UIManager>
     public void ButtoniSAct(StepType setpType)
     {
         stepButtons[(int)setpType].interactable = true;
-
-        //buttons[(int)setpType].transform.GetChild(0).GetComponent<Image>().color=Color.white;
     }
     public void ButtoniSColorChange(int setpType)
     {
-        if(GameManager.Instance.CurrentSetpType>=0)
+        if (GameManager.Instance.CurrentSetpType >= 0)
         {
-            stepButtons[(int)GameManager.Instance.CurrentSetpType].transform.GetChild(0).GetComponent<Image>().color = Color.white;
-            stepButtons[(int)GameManager.Instance.CurrentSetpType].transform.GetChild(1).GetChild(0).GetComponent<Text>().color = Color.white;
+            for (int i = 0; i < stepButtons.Length; i++)
+            {
+                if (i != setpType)
+                {
+                    stepButtons[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                    stepButtons[i].transform.GetChild(1).GetChild(0).GetComponent<Text>().color = Color.white;
+                }
+            }
         }
 
         stepButtons[(int)setpType].transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
@@ -98,11 +103,11 @@ public class UIManager : BaseInstanceMono<UIManager>
         uiControl.ShowPanel(DongTaiPanel.transform);
     }
 
-    public void WuTiJieShaoChage(string title,string text)
+    public void WuTiJieShaoChage(string title, string text)
     {
         WuTiJieShao.transform.Find("Title").GetComponent<Text>().text = title;
         WuTiJieShao.transform.Find("Content/bg/Image/Text").GetComponent<Text>().text = text;
-        WuTiJieShao.transform.Find("Content").GetComponent<ScrollRect>().normalizedPosition = Vector2.one;
+        WuTiJieShao.transform.Find("Content").GetComponent<ScrollRect>().normalizedPosition = Vector2.zero;
         uiControl.ShowPanel(WuTiJieShao.transform);
     }
 

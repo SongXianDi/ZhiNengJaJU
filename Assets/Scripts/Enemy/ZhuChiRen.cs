@@ -19,7 +19,7 @@ public class ZhuChiRen : EnemyControl
     public UnityAction action;
     private Transform player;
     public GameObject TimeLine;
-    private bool isOne=true;
+    private bool isOne = true;
 
     //private UnityTask GetThread;
     public Transform[] machinePoints = new Transform[10];
@@ -36,33 +36,42 @@ public class ZhuChiRen : EnemyControl
     }
     public override void FlipTo(Vector3 target)
     {
+        ResetStatus();
         nav.isStopped = false;
         animator.SetBool("iswalk", true);
         animator.SetBool("Proteak", false);
         nav.destination = target;
         nav.SetDestination(target);
-        GuanZ1?.FlipTo(target + Vector3.left*1.5f);
-        GuanZ2?.FlipTo(target + Vector3.right*1.5f);
-        StartCoroutine(WaitForDestination(true));
+        GuanZ1?.FlipTo(target + Vector3.left * 1.5f);
+        GuanZ2?.FlipTo(target + Vector3.right * 1.5f);
+        StartCoroutine(WaitForDestination(false));
         //StopAllCoroutines();
     }
-
+    /// <summary>
+    /// 重置状态
+    /// </summary>
+    public void ResetStatus()
+    {
+        StopAllCoroutines();
+        AudioManage.Instance.PlayMusicSourceAnimator(null, null, null);
+        animator.SetBool("istalk", false);
+    }
     public void FlipTo2(Vector3 target)
     {
         nav.isStopped = false;
-       // animator.SetBool("iswalk", true);
+        // animator.SetBool("iswalk", true);
         //animator.SetBool("Proteak", false);
         nav.SetDestination(target);
     }
 
     public IEnumerator FlipTo3(Vector3 target)
     {
-        
+
         yield return new WaitForSeconds(1f);
         animator.SetBool("iswalk", true);
         animator.SetBool("Proteak", false);
         FlipTo2(target);
-        StartCoroutine(WaitForDestination(false));
+        StartCoroutine(WaitForDestination(true));
     }
 
     public void TiShiShow(bool isShow)
@@ -71,24 +80,43 @@ public class ZhuChiRen : EnemyControl
         highlight.highlighted = isShow;
         GetComponent<CapsuleCollider>().enabled = isShow;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="isTranslate">是否是去转换点</param>
+    /// <returns></returns>
     private IEnumerator WaitForDestination(bool isTranslate)
     {
+
         while (nav.pathPending)
         {
+            //计算路径中...
             yield return null;
         }
-
+        if (!isTranslate)
+        {
+            StartCoroutine(MoveHalf(nav.remainingDistance));
+        }
         while (nav.remainingDistance > nav.stoppingDistance)
         {
-
             yield return null;
         }
 
         // 到达目的地后触发的回调函数
         OnReachedDestination(isTranslate);
     }
-
+    private IEnumerator MoveHalf(float distance)
+    {
+        while (true)
+        {
+            if (nav.remainingDistance < distance / 2)
+            {
+                GameManager.Instance.ZCRArrviePonit();
+                yield break;
+            }
+            yield return null;
+        }
+    }
     private IEnumerator Rotate()
     {
         timer = 0;
@@ -106,12 +134,12 @@ public class ZhuChiRen : EnemyControl
         //animator.SetBool("New Bool", false);
         animator.SetBool("Proteak", true);
         animator.SetBool("iswalk", false);
-        if(isTranlate)
+        if (isTranlate)
         {
             OperationHintManager.Instance.ChangeText("请跟随引导人");
             LuBiao.transform.position = transform.position;
             LuBiao.SetActive(true);
-            GameManager.Instance.ZCRArrviePonit();
+            //GameManager.Instance.ZCRArrviePonit();
         }
 
 
@@ -133,7 +161,7 @@ public class ZhuChiRen : EnemyControl
                 TimeLine.SetActive(true);
                 AudioManage.Instance.PlayMusicSource("欢迎辞", () => { TimeLine.SetActive(false); Arrive(); });
                 break;
-            //正常步骤
+            //结束步骤
             case StepType.自动开料区:
                 StartCoroutine(FlipTo3(machinePoints[(int)(GameManager.Instance.CurrentSetpType)].position));
                 AudioManage.Instance.PlayMusicSourceAnimator("（" + ((int)GameManager.Instance.CurrentSetpType + 1).ToString() + "）", () =>
@@ -142,20 +170,18 @@ public class ZhuChiRen : EnemyControl
                     animator.SetTrigger("HandUp");
                 }, Last);
                 break;
+            //正常步骤
             default:
                 StartCoroutine(FlipTo3(machinePoints[(int)(GameManager.Instance.CurrentSetpType)].position));
-                //没有穿插动画
-                //AudioManage.Instance.PlayMusicSource("（" + ((int)GameManager.Instance.CurrentSetpType + 1).ToString() + "）", Arrive);
                 //说话中播放动画
                 AudioManage.Instance.PlayMusicSourceAnimator("（" + ((int)GameManager.Instance.CurrentSetpType + 1).ToString() + "）", () =>
                 {
                     //动画播放
                     animator.SetTrigger("HandUp");
                 }, Arrive);
-                //Arrive();
                 break;
         }
-       
+
     }
 
     private async void Last()
