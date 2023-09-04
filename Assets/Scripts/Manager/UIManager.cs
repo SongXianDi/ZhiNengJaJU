@@ -19,10 +19,11 @@ public class UIManager : BaseInstanceMono<UIManager>
     //跟随按钮
     public Button followBtn;
 
+    public Sprite selected_btnImage;
+    public Sprite unselected_btnImage;
     public Transform MuCaiJieShao;
 
 
-    private Color color;
     public override void Awake()
     {
         base.Awake();
@@ -30,7 +31,6 @@ public class UIManager : BaseInstanceMono<UIManager>
         MuCaiJieShao = transform.Find("木材介绍");
         uiControl = transform.GetComponent<UIControl>();
         followBtn = transform.Find("自动跟随").GetComponent<Button>();
-        color = new Color(255, 255, 255, 0.5f);
         for (int i = 0; i < transform.Find("流程图/bg2/bg").childCount; i++)
         {
             stepButtons[i] = transform.Find("流程图/bg2/bg").GetChild(i).GetComponent<Button>();
@@ -44,7 +44,6 @@ public class UIManager : BaseInstanceMono<UIManager>
             if (i != 0)
             {
                 stepButtons[i].interactable = false;
-                stepButtons[i].transform.GetChild(0).GetComponent<Image>().color = color;
             }
 
             int buttonIndext = i;
@@ -87,14 +86,12 @@ public class UIManager : BaseInstanceMono<UIManager>
             {
                 if (i != setpType)
                 {
-                    stepButtons[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                    stepButtons[i].transform.GetChild(1).GetChild(0).GetComponent<Text>().color = Color.white;
+                    stepButtons[i].GetComponent<Button>().image.sprite = unselected_btnImage;
                 }
             }
         }
+        stepButtons[(int)setpType].GetComponent<Button>().image.sprite = selected_btnImage;
 
-        stepButtons[(int)setpType].transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
-        stepButtons[(int)setpType].transform.GetChild(1).GetChild(0).GetComponent<Text>().color = Color.yellow;
         //buttons[(int)setpType].transform.GetChild(0).GetComponent<Image>().color=Color.white;
     }
     public void DoTaiPanelChage(string text)

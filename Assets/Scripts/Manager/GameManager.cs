@@ -106,7 +106,7 @@ public class GameManager : BaseInstanceMono<GameManager>
             print("下一步骤");
             stepManager.NextSetp(step);
             realSetpType = step + 1;
-
+            //分数增加（职员一次）
         }
         currentSetpType = step;
 

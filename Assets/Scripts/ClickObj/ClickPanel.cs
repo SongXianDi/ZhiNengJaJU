@@ -23,9 +23,9 @@ public class ClickPanel : OnClickObj
 
     protected override void OnMouseDown()
     {
-        panel.transform.Find("ImageLeft/Picture").GetComponent<Image>().sprite = picture;
-        panel.transform.Find("ImageLeft/Text").GetComponent<Text>().text = text;
-        panel.transform.Find("ImageRight/Text").GetComponent<Text>().text = describe;
+        panel.transform.Find("框/ImageLeft/Picture").GetComponent<Image>().sprite = picture;
+        panel.transform.Find("框/ImageLeft/Text").GetComponent<Text>().text = text;
+        panel.transform.Find("框/ImageRight/Text").GetComponent<Text>().text = describe;
         base.OnMouseDown();
         UIManager.Instance.Show(panel);
         StartCoroutine(ShowHLight());

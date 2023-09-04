@@ -203,7 +203,7 @@ public class ZhuChiRen : EnemyControl
         animator.SetBool("istalk", false);
         GameManager.Instance.gameControl.ZhuChiRenArrive();
         OperationHintManager.Instance.ChangeText("请点击流程按钮");
-        await Task.Delay(1000);
+        await Task.Delay(2000);
         GameManager.Instance.ZhuChiRenMove(GameManager.Instance.CurrentSetpType + 1);
     }
 

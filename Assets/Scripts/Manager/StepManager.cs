@@ -18,7 +18,7 @@ public class StepManager : MonoBehaviour
     public void NextSetp(StepType setp)
     {
         GameManager.Instance.ZhuChiRen.TiShiShow(true);
-        OperationHintManager.Instance.ChangeText("到达" + setp.ToString()+ "点击主持人或点击物体");
+        OperationHintManager.Instance.ChangeText("到达" + setp.ToString()+ "点击引导人或点击物体");
 
         stepImages[(int)setp].arrviedThis();
     }
