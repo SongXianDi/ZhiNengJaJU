@@ -32,7 +32,7 @@ public class GameManager : BaseInstanceMono<GameManager>
 
     public HighlightPlus.HighlightProfile highlightTool;
 
-
+    public PlayerControl player;
 
     //当前阶段
     private StepType currentSetpType = StepType.NIL;
@@ -62,20 +62,27 @@ public class GameManager : BaseInstanceMono<GameManager>
     private void Start()
     {
         ZhuChiRen = GameObject.FindGameObjectWithTag("Enemy").GetComponent<ZhuChiRen>();
-        //mater.GetComponent<MeshRenderer>().material.SetFloat("_Speed",0.5f);
-    }
-    public void ZhuChiRenMove(int i)
-    {
-        ZhuChiRen.FlipTo(points[i].position);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
     }
     /// <summary>
-    /// 玩家到达地点后处理的事情（动画，可点击...）
+    /// 主持人说完后进入下一步（或者按钮点击的下一步）
     /// </summary>
-    public void PlayerArrviePonit(StepType setpType)
+    /// <param name="i"></param>
+    public void ZhuChiRenMove(StepType i)
     {
-        ZhuChiRen.TiShiShow(true);
+        UIManager.Instance.ButtoniSColorChange((int)i);
+        ZhuChiRen.TiShiShow(false);
+        PlayerSetpType =i;
+        ZhuChiRen.FlipTo(points[(int)i].position);
+    }
 
-        // StepGeneralMethod(setpType);
+    /// <summary>
+    /// 主持人到达地点后处理的事情（激活玩家跟随按钮）
+    /// </summary>
+    public void ZCRArrviePonit()
+    {
+        print("到达");
+        UIManager.Instance.FollowBtnShow();
     }
 
 
@@ -99,7 +106,7 @@ public class GameManager : BaseInstanceMono<GameManager>
             print("下一步骤");
             stepManager.NextSetp(step);
             realSetpType = step + 1;
-
+            //分数增加（职员一次）
         }
         currentSetpType = step;
 
@@ -107,5 +114,6 @@ public class GameManager : BaseInstanceMono<GameManager>
         //AudioManage.Instance.PlayMusicSource(audioName, 0.5f);
         //obje.GetComponent<HighlightPlus.HighlightEffect>().highlighted = true;
     }
+
 
 }

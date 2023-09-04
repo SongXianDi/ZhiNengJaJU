@@ -32,6 +32,11 @@ public class OperationHintManager : BaseInstanceMono<OperationHintManager>
         zhanKai.gameObject.SetActive(false);
         //_tweener= transform.DOMoveX(152.1f, 2f);
     }
+    public void Open2()
+    {
+        zhanKai.gameObject.SetActive(false);
+        //_tweener= transform.DOMoveX(152.1f, 2f);
+    }
 
     public void ChangeText(string str)
     {
@@ -42,9 +47,9 @@ public class OperationHintManager : BaseInstanceMono<OperationHintManager>
         
        // t = transform.XPUIOpen();
         contentText.text = str;
-        Open();
+        Open2();
 
-        Invoke("Close", 3f);
+       // Invoke("Close", 6f);
     }
 
 

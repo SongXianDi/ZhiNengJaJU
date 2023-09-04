@@ -23,6 +23,7 @@ public class ClickAni : OnClickObj
     {
         if (transforms.Length > 0)
         {
+            Debug.Log(gameObject.name);
             //animatorsList = new List<List<Animator>>();
             animatorsList = new List<Animator[]>();
             animatorList = new List<Animator>();
