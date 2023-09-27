@@ -37,7 +37,7 @@ public class GameManager : BaseInstanceMono<GameManager>
     //当前阶段
     private StepType currentSetpType = StepType.NIL;
     //实际(调试时跳过步骤可改)
-    private StepType realSetpType = StepType.一号车间分拣线;
+    private StepType realStepType = StepType.一号车间分拣线;
 
     //阶段每个地点
     public Transform[] points;
@@ -49,15 +49,15 @@ public class GameManager : BaseInstanceMono<GameManager>
     {
         get => playerSetpType; set
         {
-            if (playerSetpType <= realSetpType)
+            if (playerSetpType <= realStepType)
                 playerSetpType = value;
             else
-                playerSetpType = realSetpType;
+                playerSetpType = realStepType;
         }
     }
 
     public StepType CurrentSetpType { get => currentSetpType; }
-    public StepType RealSetpType { get => realSetpType; }
+    public StepType RealSetpType { get => realStepType; }
 
     private void Start()
     {
@@ -66,14 +66,22 @@ public class GameManager : BaseInstanceMono<GameManager>
     }
     /// <summary>
     /// 主持人说完后进入下一步（或者按钮点击的下一步）
+    /// 步骤结束
     /// </summary>
     /// <param name="i"></param>
     public void ZhuChiRenMove(StepType i)
     {
+        if (RealSetpType < StepType.End)
+        {
+            UIManager.Instance.ButtoniSAct(GameManager.Instance.RealSetpType);
+        }
         UIManager.Instance.ButtoniSColorChange((int)i);
         ZhuChiRen.TiShiShow(false);
         PlayerSetpType =i;
         ZhuChiRen.FlipTo(points[(int)i].position);
+
+        Debug.Log(realStepType);
+        Debug.Log(i);
     }
 
     /// <summary>
@@ -96,21 +104,30 @@ public class GameManager : BaseInstanceMono<GameManager>
     public void StepGeneralMethod(StepType step, string audioName = null, bool isNext = true)
     {
         //是（以前步骤） 否（下一步骤）
-        if ((int)realSetpType > (int)step)
+        if ((int)realStepType > (int)step)
         {
             Debug.Log("以前步骤");
-            stepManager.BeforSetp(step);
+            stepManager.BeforeSetp(step);
         }
-        else if (realSetpType == step)
+        else if (realStepType == step)
         {
             print("下一步骤");
             stepManager.NextSetp(step);
-            realSetpType = step + 1;
-            //分数增加（职员一次）
+            realStepType = step + 1;
+
+            if (currentSetpType != StepType.NIL)
+            {
+                ScoreManager.Instance.SetTestProcedureScoreAndValueAdnEndTime(currentSetpType.ToString(), 0, "", "赋分模型", 60, 1);
+
+                if (realStepType == StepType.End)
+                {
+                    FindObjectOfType<HTTP>().FinalSubmitIableData();
+                }
+            }
+
+            //分数增加（只有一次）
         }
         currentSetpType = step;
-
-
         //AudioManage.Instance.PlayMusicSource(audioName, 0.5f);
         //obje.GetComponent<HighlightPlus.HighlightEffect>().highlighted = true;
     }

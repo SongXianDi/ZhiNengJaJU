@@ -6,7 +6,47 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FABRIC 1_FRONT_2228
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert4
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yenai_gril_goe_ai_arm
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yenai_gril_goe_ai_body
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yenai_gril_goe_ai_brow
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yenai_gril_goe_ai_eye
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yenai_gril_goe_ai_eye_light
+    second: {fileID: 2100000, guid: 8ae649be45827504d8f638fb3763742f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

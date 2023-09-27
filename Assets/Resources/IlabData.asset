@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae76557b83a96242ae3566548da4f30, type: 3}
+  m_Name: IlabData
+  m_EditorClassIdentifier: 
+  username: 1
+  title: "\u73B0\u4EE3\u5316\u667A\u80FD\u5DE5\u5382\u5BB6\u5177\u4EA7\u4E1A\u94FE\u53C2\u89C2\u5B9E\u8BAD\u8F6F\u4EF6"
+  status: 1
+  score: 100
+  startTime: 1695780803592
+  endTime: 1695781277458
+  timeUsed: 473
+  appid: 1007
+  originId: 11695781277460
+  steps:
+  - seq: 1
+    title: "\u4E00\u53F7\u8F66\u95F4\u5206\u62E3\u7EBF"
+    startTime: 1695780830865
+    endTime: 1695780885834
+    timeUsed: 54
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 2
+    title: "\u667A\u80FDAGV\u5C0F\u8F66\u8C03\u5EA6\u533A"
+    startTime: 1695780885833
+    endTime: 1695780930750
+    timeUsed: 44
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 3
+    title: "\u4E00\u53F7\u8F66\u95F4\u7801\u579B\u7EBF"
+    startTime: 1695780930739
+    endTime: 1695780997919
+    timeUsed: 67
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 4
+    title: "\u4E00\u53F7\u8F66\u95F4\u68B3\u9F7F\u6307\u63A5\u7EBF"
+    startTime: 1695780997870
+    endTime: 1695781074558
+    timeUsed: 76
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 5
+    title: "\u6307\u63A5\u517B\u751F\u623F"
+    startTime: 1695781074557
+    endTime: 1695781112239
+    timeUsed: 37
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 6
+    title: "\u8FDE\u7EED\u62FC\u677F\u7EBF"
+    startTime: 1695781112207
+    endTime: 1695781149566
+    timeUsed: 37
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 7
+    title: "\u62FC\u677F\u517B\u751F\u623F"
+    startTime: 1695781149566
+    endTime: 1695781184550
+    timeUsed: 34
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 8
+    title: "\u81EA\u52A8\u7802\u5149\u533A"
+    startTime: 1695781184520
+    endTime: 1695781244217
+    timeUsed: 59
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 9
+    title: "\u51B7\u538B\u62FC\u677F\u533A"
+    startTime: 1695781244216
+    endTime: 1695781277458
+    timeUsed: 33
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 
+  - seq: 10
+    title: "\u81EA\u52A8\u5F00\u6599\u533A"
+    startTime: 1695781277457
+    endTime: 0
+    timeUsed: 730804
+    expectTime: 60
+    maxScore: 10
+    score: 10
+    repeatCount: 1
+    evaluation: "\u4F18"
+    scoringModel: "\u8D4B\u5206\u6A21\u578B"
+    remarks: 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -168,7 +165,7 @@ public class ZhuChiRen : EnemyControl
                 {
                     //动画播放
                     animator.SetTrigger("HandUp");
-                }, Last);
+                }, () => StartCoroutine(Last()));
                 break;
             //正常步骤
             default:
@@ -178,32 +175,34 @@ public class ZhuChiRen : EnemyControl
                 {
                     //动画播放
                     animator.SetTrigger("HandUp");
-                }, Arrive);
+                }, () => StartCoroutine(Arrive()));
                 break;
         }
 
     }
-
-    private async void Last()
+    /// <summary>
+    /// 最后一步
+    /// </summary>
+    private IEnumerator Last()
     {
         animator.SetBool("istalk", false);
         if (GameManager.Instance.RealSetpType == StepType.End && isOne)
         {
             //isOne = false;
             animator.SetBool("istalk", true);
-            await Task.Delay(2000);
+            yield return new WaitForSeconds(2);
             OperationHintManager.Instance.ChangeText("浏览结束，你也可以点击流程观看以前步骤");
             AudioManage.Instance.PlayMusicSource("结束语");
         }
 
     }
 
-    public async void Arrive()
+    public IEnumerator Arrive()
     {
         animator.SetBool("istalk", false);
-        GameManager.Instance.gameControl.ZhuChiRenArrive();
         OperationHintManager.Instance.ChangeText("请点击流程按钮");
-        await Task.Delay(2000);
+        yield return new WaitForSeconds(2);
+        //两秒后自动下一步
         GameManager.Instance.ZhuChiRenMove(GameManager.Instance.CurrentSetpType + 1);
     }
 

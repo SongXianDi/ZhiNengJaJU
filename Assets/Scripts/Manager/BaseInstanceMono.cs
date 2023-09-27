@@ -14,5 +14,18 @@ public class BaseInstanceMono<T> : MonoBehaviour where T : BaseInstanceMono<T>
             return;
         }
         Instance = this as T;
+        InitInAwake();
+    }
+    private void Start()
+    {
+        InitInStart();
+    }
+    protected virtual void InitInAwake()
+    {
+
+    }
+    protected virtual void InitInStart()
+    {
+
     }
 }

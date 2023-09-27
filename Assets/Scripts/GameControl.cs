@@ -29,18 +29,7 @@ public class GameControl : MonoBehaviour
         ZhuChiRen.TiShiShow(true);
     }
 
-    /// <summary>
-    /// 主持人说完话后处理h
-    /// </summary>
-    /// <param name="setpType"></param>
-    public void ZhuChiRenArrive()
-    {
-        if (GameManager.Instance.RealSetpType < StepType.End)
-        {
-            UIManager.Instance.ButtoniSAct(GameManager.Instance.RealSetpType);
-        }
 
-    }
 
     public void PlayerArrivePoint()
     {
