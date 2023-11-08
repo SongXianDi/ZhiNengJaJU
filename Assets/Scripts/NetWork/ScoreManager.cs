@@ -31,7 +31,7 @@ public class ScoreManager : BaseInstanceMono<ScoreManager>
             //{
             //    evaluation = "不合格";
             //}
-            step.score = step.maxScore = 100 / ilabData.steps.Count;
+            step.score = step.maxScore = 100 ;
             step.evaluation = "优";
             step.Init();
         }

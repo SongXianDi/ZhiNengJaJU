@@ -193,6 +193,7 @@ public class ZhuChiRen : EnemyControl
             yield return new WaitForSeconds(2);
             OperationHintManager.Instance.ChangeText("浏览结束，你也可以点击流程观看以前步骤");
             AudioManage.Instance.PlayMusicSource("结束语");
+            FindObjectOfType<HTTP>().FinalSubmitIableData();
         }
 
     }

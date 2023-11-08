@@ -8,12 +8,15 @@ using System.Text;
 public class JiangxiSciencesAbutment : MonoBehaviour
 {
     private const int APPID = 1007;
+    public bool isTest;
     public string IP
     {
         get
         {
-            return "http://192.168.101.99:8002";//测试IP
-            //return "https://ilab-x.jxust.edu.cn/jxustapi/";//正式IP
+            if (isTest)
+                return "http://192.168.101.99:8002";//测试IP
+            else
+                return "http://192.168.10.61:8002";//正式IP
         }
     }
     /// <summary>获取题库的Url</summary>
@@ -184,6 +187,8 @@ public class JiangxiSciencesAbutment : MonoBehaviour
     //加密
     public static byte[] Encrypt(string pToEncrypt, string sKey)
     {
+        if (string.IsNullOrEmpty(pToEncrypt))
+            return null;
         using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
         {
 

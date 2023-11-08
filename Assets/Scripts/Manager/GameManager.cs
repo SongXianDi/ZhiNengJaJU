@@ -118,11 +118,6 @@ public class GameManager : BaseInstanceMono<GameManager>
             if (currentSetpType != StepType.NIL)
             {
                 ScoreManager.Instance.SetTestProcedureScoreAndValueAdnEndTime(currentSetpType.ToString(), 0, "", "赋分模型", 60, 1);
-
-                if (realStepType == StepType.End)
-                {
-                    FindObjectOfType<HTTP>().FinalSubmitIableData();
-                }
             }
 
             //分数增加（只有一次）

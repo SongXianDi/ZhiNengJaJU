@@ -28,6 +28,7 @@ public class SetMaskLoad : MonoBehaviour
     public static SetMaskLoad Instance => _instance;
     private static SetMaskLoad _instance;
     private Text _conentText;
+    public Text btnText => _button.GetComponentInChildren<Text>();
     private Button _button;
     private GameObject _stateObj;
 

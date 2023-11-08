@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 //using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
@@ -18,10 +21,13 @@ public class UIManager : BaseInstanceMono<UIManager>
 
     //跟随按钮
     public Button followBtn;
+    public Button introduceBTN;
+    public Button exitBTN;
 
     public Sprite selected_btnImage;
     public Sprite unselected_btnImage;
     public Transform MuCaiJieShao;
+    public Transform CaoZuoShouCe;
 
 
     public override void Awake()
@@ -29,6 +35,7 @@ public class UIManager : BaseInstanceMono<UIManager>
         base.Awake();
         WuTiJieShao = transform.Find("物体介绍").gameObject;
         MuCaiJieShao = transform.Find("木材介绍");
+        CaoZuoShouCe = transform.Find("操作手册");
         uiControl = transform.GetComponent<UIControl>();
         followBtn = transform.Find("自动跟随").GetComponent<Button>();
         for (int i = 0; i < transform.Find("流程图/bg2/bg").childCount; i++)
@@ -61,6 +68,21 @@ public class UIManager : BaseInstanceMono<UIManager>
         {
             GameManager.Instance.player.FlipTo(/*GameManager.Instance.points[(int)GameManager.Instance.PlayerSetpType].position*/GameManager.Instance.ZhuChiRen.transform);
             followBtn.transform.XPUIClose();
+        });
+        introduceBTN.onClick.AddListener(() =>
+        {
+            CaoZuoShouCe.gameObject.SetActive(true);
+            CaoZuoShouCe.XPUIOpen();
+        });
+        exitBTN.onClick.AddListener(() =>
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+            Application.Quit();
+#elif UNITY_WEBGL
+            FindObjectOfType<HTTP>().Quit();
+#endif
         });
     }
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using System;
 using System.Linq;
-
+using System.Runtime.InteropServices;
 
 public class HTTP : MonoBehaviour
 {
@@ -17,6 +17,13 @@ public class HTTP : MonoBehaviour
     /// 传给Ilab的实验报表
     /// </summary>
     public IlabData TESTData;
+    [DllImport("__Internal")]
+    private static extern void CloseWindow();
+
+    public void Quit()
+    {
+        CloseWindow();
+    }
 
     void Start()
     {
@@ -203,10 +210,15 @@ public class HTTP : MonoBehaviour
             Debug.Log(Access_Token);
             _jiangxiSciencesAbutment.SubmitData(dataJson, Access_Token, () =>
             {
-                OperationHintManager.Instance.ChangeText("结束，您可以自由参观厂区或退出");
-                SetMaskLoad.Instance.StartMaskText("数据提交成功", false, null, SetMaskLoad.LoadState.Win, 0.3f, 2f, WinEvnet);
+                OperationHintManager.Instance.ChangeText("结束，您可以退出了");
+                SetMaskLoad.Instance.btnText.text = "退出";
+                SetMaskLoad.Instance.StartMaskText("数据提交成功", true, () => Quit(), SetMaskLoad.LoadState.Win, 0.3f, 20f, WinEvnet);
             },
-               () => SetMaskLoad.Instance.StartMaskText("成绩提交失败，请重试......", true, () => SubmitData(), SetMaskLoad.LoadState.Error)
+               () =>
+               {
+                   SetMaskLoad.Instance.btnText.text = "重试";
+                   SetMaskLoad.Instance.StartMaskText("成绩提交失败，请重试......", true, () => SubmitData(), SetMaskLoad.LoadState.Error);
+               }
            );
         }
 
@@ -222,7 +234,7 @@ public class HTTP : MonoBehaviour
 #if UNITY_EDITOR
     void WinEvnet(GameObject obj)
     {
-        UnityEditor.EditorApplication.isPaused = true;
+        //UnityEditor.EditorApplication.isPaused = true;
     }
 #elif UNITY_WEBGL
             void WinEvnet(GameObject obj)
